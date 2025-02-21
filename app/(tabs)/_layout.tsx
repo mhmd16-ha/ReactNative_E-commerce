@@ -1,45 +1,36 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { Tabs } from 'expo-router'
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { Colors } from '@/style/Colors';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const _layout = () => {
+  const { items } = useSelector((state: RootState) => state.cart)
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+   <Tabs screenOptions={{headerShown:false}}>
+    <Tabs.Screen name='index' options={{
+        title:'Home',
+        tabBarActiveTintColor:Colors.Primary,
+        tabBarIcon:({color,size})=>{
+           return <AntDesign name='home' size={size} color={color}/>
+        },
+        
+    }}/>
+    <Tabs.Screen name='Cart'options={{
+        tabBarActiveTintColor:Colors.Primary,
+        tabBarBadge:items.length,
+        title:'Cart',
+        tabBarIcon:({color,size})=>{
+           return <FontAwesome name='opencart' size={size} color={color}/>
+        }
+    }}/>
+   </Tabs>
+  )
 }
+
+export default _layout
+
+const styles = StyleSheet.create({})
