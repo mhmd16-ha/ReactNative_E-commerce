@@ -19,26 +19,24 @@ export const cartSlice = createSlice({
     addItemToCart:(state,action:PayloadAction<productType>)=>{
       let isExisted= state.items.find((item)=>item.id==action.payload.id)
       if(isExisted){
-        isExisted.quantity+=1
-        isExisted.sumPrice+=action.payload?.price
+        isExisted.quantity += 1;
+        isExisted.sumPrice = Number(isExisted.sumPrice) + Number(action.payload?.price);
       }else{
         state.items.push({
           ...action.payload,
-          quantity:1,
-          sumPrice:action.payload?.price
-      })
-     
+          quantity: 1,
+          sumPrice: Number(action.payload?.price)
+        });
       }
        
     },
     removeItemFromCart:(state,action:PayloadAction<productType>)=>{
       let isExisted= state.items.find((item)=>item.id==action.payload.id)
-      if(isExisted && isExisted.quantity !=1){
-        isExisted.quantity-=1
-        isExisted.sumPrice-=action.payload?.price
+      if(isExisted && isExisted.quantity !== 1){
+        isExisted.quantity -= 1;
+        isExisted.sumPrice = Number(isExisted.sumPrice) - Number(action.payload?.price);
       }else{
-       state.items=state.items.filter(item=>item.id!==action.payload.id)
-     
+        state.items = state.items.filter(item => item.id !== action.payload.id);
       }
        
     }

@@ -2,8 +2,7 @@
 
 # dependencies
 node_modules/
-pushnotification-dc7de-firebase-adminsdk-fbsvc-9bda3317be.json
-google-services.json
+
 /android
 /ios
 # Expo

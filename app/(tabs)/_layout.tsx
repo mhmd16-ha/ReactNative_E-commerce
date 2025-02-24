@@ -9,6 +9,7 @@ import { RootState } from '@/store/store';
 
 const _layout = () => {
   const { items } = useSelector((state: RootState) => state.cart)
+  const { WishListItems } = useSelector((state: RootState) => state.WishListItems)
   return (
    <Tabs screenOptions={{headerShown:false}}>
     <Tabs.Screen name='index' options={{
@@ -25,6 +26,14 @@ const _layout = () => {
         title:'Cart',
         tabBarIcon:({color,size})=>{
            return <FontAwesome name='opencart' size={size} color={color}/>
+        }
+    }}/>
+    <Tabs.Screen name='Favorite'options={{
+        tabBarActiveTintColor:Colors.Primary,
+        tabBarBadge:WishListItems.length,
+        title:'Favorite',
+        tabBarIcon:({color,size})=>{
+           return <FontAwesome name='heart-o' size={size} color={color}/>
         }
     }}/>
    </Tabs>

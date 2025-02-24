@@ -3,18 +3,21 @@ import  cartSlice  from './cartSlice'
 import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import storage from '@react-native-async-storage/async-storage';
 import productSlice from './productSlice';
+import WishListSlice from './wishListSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
   version: 1,
 };
-const persistedReducer = persistReducer(persistConfig, cartSlice);
+const CartpersistedReducer = persistReducer(persistConfig, cartSlice);
+const WishLisrpersistedReducer = persistReducer(persistConfig, WishListSlice);
 
 export const store = configureStore({
   reducer: {
-    cart:persistedReducer,
-    products:productSlice
+    cart:CartpersistedReducer,
+    WishListItems:WishLisrpersistedReducer,
+    products:productSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

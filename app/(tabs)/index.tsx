@@ -10,9 +10,9 @@ import { RootState } from '@/store/store'
 const HomeScreen = () => {
   // const [products, setProducts] = useState<productType[]>()
   const { products } = useSelector((state: RootState) => state.products)
-  const dispath = useDispatch()
+  const dispatch = useDispatch()
   useEffect(() => {
-    dispath(getProducts())
+    dispatch(getProducts() as any)
   }, [])
 
   return (

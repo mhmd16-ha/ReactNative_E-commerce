@@ -4,8 +4,10 @@ import { productType } from '@/constants/type'
 import { S, vS } from '@/style/responsive'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { Colors } from '@/style/Colors'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addItemToCart } from '@/store/cartSlice'
+import {  ToggleWishList } from '@/store/wishListSlice'
+import { RootState } from '@/store/store'
 
 interface props {
     productsItem?: productType[]
@@ -14,10 +16,15 @@ interface props {
 const { width } = Dimensions.get('screen')
 const CardWidth = (width / 2) - 20
 const ProductCard: React.FC<props> = ({ productsItem }) => {
+  const { WishListItems } = useSelector((state: RootState) => state.WishListItems)
+
     const dispatch = useDispatch()
     const handelAppToCart = (item: productType) => {
         dispatch(addItemToCart(item))
     }
+    const handleWishListToggole = (item:productType) => {
+        dispatch(ToggleWishList(item))
+      }
     return (
         <>
             <FlatList
@@ -36,8 +43,8 @@ const ProductCard: React.FC<props> = ({ productsItem }) => {
                                 <Text style={{ color: 'white' }}>Add To Cart</Text>
                             </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={styles.heart}>
-                            <FontAwesome name='heart-o' size={20} color={Colors.Primary} />
+                        <TouchableOpacity onPress={()=>handleWishListToggole(item)} style={styles.heart}>
+                          {WishListItems.find((i)=>i.id==item.id) ?<FontAwesome name='heart' size={20} color={Colors.Primary} />: <FontAwesome name='heart-o' size={20} color={Colors.Primary} />}
                         </TouchableOpacity>
                     </TouchableOpacity>
                 )}
